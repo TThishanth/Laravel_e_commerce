@@ -37,6 +37,14 @@
     <link href="{{ asset('admin/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
 
+    {{-- data table --}}
+    <link href="{{ asset('admin/lib/highlightjs/github.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/lib/datatables/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/lib/select2/css/select2.min.css') }}" rel="stylesheet">
+
+    {{-- toastr --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('admin/css/starlight.css') }}">
 </head>
@@ -44,42 +52,26 @@
 <body>
 
     <!-- ########## START: LEFT PANEL ########## -->
-    <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> starlight</a></div>
+    <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> eCommerce</a></div>
     <div class="sl-sideleft">
-        <div class="input-group input-group-search">
-            <input type="search" name="search" class="form-control" placeholder="Search">
-            <span class="input-group-btn">
-                <button class="btn"><i class="fa fa-search"></i></button>
-            </span><!-- input-group-btn -->
-        </div><!-- input-group -->
-
-        <label class="sidebar-label">Navigation</label>
         <div class="sl-sideleft-menu">
-            <a href="index.html" class="sl-menu-link active">
+            <a href="#" class="sl-menu-link active">
                 <div class="sl-menu-item">
                     <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
                     <span class="menu-item-label">Dashboard</span>
                 </div><!-- menu-item -->
-            </a><!-- sl-menu-link -->
-            <a href="widgets.html" class="sl-menu-link">
-                <div class="sl-menu-item">
-                    <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-                    <span class="menu-item-label">Cards &amp; Widgets</span>
-                </div><!-- menu-item -->
-            </a><!-- sl-menu-link -->
+            </a>
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
                     <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-                    <span class="menu-item-label">Charts</span>
+                    <span class="menu-item-label">Category</span>
                     <i class="menu-item-arrow fa fa-angle-down"></i>
                 </div><!-- menu-item -->
             </a><!-- sl-menu-link -->
             <ul class="sl-menu-sub nav flex-column">
-                <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
-                <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
-                <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Chart JS</a></li>
-                <li class="nav-item"><a href="chart-rickshaw.html" class="nav-link">Rickshaw</a></li>
-                <li class="nav-item"><a href="chart-sparkline.html" class="nav-link">Sparkline</a></li>
+                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Category</a></li>
+                <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Category</a></li>
+                <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brand</a></li>
             </ul>
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
@@ -182,9 +174,6 @@
                         <ul class="list-unstyled user-profile-nav">
                             <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
                             <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-                            <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
-                            <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-                            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
                             <li style="margin-left: -13px">
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
@@ -396,6 +385,91 @@
     <script src="{{ asset('admin/lib/bootstrap/bootstrap.js') }}"></script>
     <script src="{{ asset('admin/lib/jquery-ui/jquery-ui.js') }}"></script>
     <script src="{{ asset('admin/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js') }}"></script>
+
+    {{-- data table --}}
+    <script src="{{ asset('admin/lib/highlightjs/highlight.pack.js') }}"></script>
+    <script src="{{ asset('admin/lib/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('admin/lib/datatables-responsive/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('admin/lib/select2/js/select2.min.js') }}"></script>
+    <script>
+        $(function() {
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+            $('#datatable2').DataTable({
+                bLengthChange: false,
+                searching: false,
+                responsive: true
+            });
+
+            // Select2
+            $('.dataTables_length select').select2({
+                minimumResultsForSearch: Infinity
+            });
+
+        });
+
+    </script>
+
+    {{-- toastr --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+ 
+     <script>
+         @if (Session::has('message'))
+            var type = '{{ Session::get('alert-type', 'info') }}'
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('messege') }}");
+                    break;
+
+                case 'success':
+                    toastr.success("{{ Session::get('messege') }}");
+                    break;
+
+                case 'warning':
+                    toastr.warning("{{ Session::get('messege') }}");
+                    break;
+
+                case 'error':
+                    toastr.error("{{ Session::get('messege') }}");
+                    break;           
+            }
+         @endif
+     </script>
+
+    {{-- sweetalert --}}
+    <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+
+    <script>  
+        $(document).on("click", "#delete", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+               swal({
+                 title: "Are you Want to delete?",
+                 text: "Once Delete, This will be Permanently Delete!",
+                 icon: "warning",
+                 buttons: true,
+                 dangerMode: true,
+               })
+               .then((willDelete) => {
+                 if (willDelete) {
+                      window.location.href = link;
+                 } else {
+                   swal("Safe Data!");
+                 }
+               });
+           });
+   </script>
+
+
     <script src="{{ asset('admin/lib/jquery.sparkline.bower/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('admin/lib/d3/d3.js') }}"></script>
     <script src="{{ asset('admin/lib/rickshaw/rickshaw.min.js') }}"></script>

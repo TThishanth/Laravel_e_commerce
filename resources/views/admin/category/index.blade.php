@@ -28,12 +28,25 @@
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->category_name }}</td>
                                     <td>
-                                        <a href="" class="btn btn-sm btn-info"> Edit </a>
-                                        <a href="{{ route('category.destroy',$category->id) }}" class="btn btn-sm btn-danger" id="delete"> Delete </a>
+                                        <div class="row">
+                                            <div>
+                                                <a href="{{ route('category.edit', [$category->id]) }}"
+                                                    class="btn btn-sm btn-info">
+                                                    Edit </a>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <form method="POST" id="form"
+                                                    action="{{ route('category.destroy', [$category->id]) }}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div><!-- table-wrapper -->

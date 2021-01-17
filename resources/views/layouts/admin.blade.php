@@ -423,50 +423,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
  
      <script>
-         @if (Session::has('message'))
-            var type = '{{ Session::get('alert-type', 'info') }}'
-            switch (type) {
+        @if(Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch(type){
                 case 'info':
-                    toastr.info("{{ Session::get('messege') }}");
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
                     break;
 
                 case 'success':
-                    toastr.success("{{ Session::get('messege') }}");
-                    break;
-
-                case 'warning':
-                    toastr.warning("{{ Session::get('messege') }}");
+                    toastr.success("{{ Session::get('message') }}");
                     break;
 
                 case 'error':
-                    toastr.error("{{ Session::get('messege') }}");
-                    break;           
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
             }
-         @endif
+        @endif
      </script>
 
     {{-- sweetalert --}}
     <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
     <script>  
-        $(document).on("click", "#delete", function(e){
-            e.preventDefault();
-            var link = $(this).attr("href");
-               swal({
-                 title: "Are you Want to delete?",
-                 text: "Once Delete, This will be Permanently Delete!",
-                 icon: "warning",
-                 buttons: true,
-                 dangerMode: true,
-               })
-               .then((willDelete) => {
-                 if (willDelete) {
-                      window.location.href = link;
-                 } else {
-                   swal("Safe Data!");
-                 }
-               });
-           });
+        $(document).on('submit', '[id^=form]', function (e) {
+            event.preventDefault(); // prevent form submit
+            var form = document.forms["form"]; // storing the form
+            swal({
+                    title: "Are you Want to delete?",
+                    text: "Once Delete, This will be Permanently Delete!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    } else {
+                        return true;
+                }
+            });
+        });
    </script>
 
 

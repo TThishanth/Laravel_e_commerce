@@ -19,6 +19,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+        
         return view('admin.category.index', compact('categories'));
     }
 
@@ -45,7 +46,7 @@ class CategoryController extends Controller
         Category::create($input);
 
         $notification = array(
-            'message' => 'Category Added Successfully',
+            'message' => 'Category created Successfully',
             'alert-type' => 'success'
         );
 
@@ -71,7 +72,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -81,9 +84,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $category->update($request->all());
+
+        $notification = array(
+            'message' => 'Category Updated Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect('/admin/category')->with($notification);
     }
 
     /**
@@ -94,13 +106,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+
         $category = Category::findOrFail($id);
 
         $category->delete();
 
         $notification = array(
             'message' => 'Category Deleted Successfully',
-            'alert-type' => 'success'
+            'alert-type' => 'success',
         );
 
         return redirect()->back()->with($notification);

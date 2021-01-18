@@ -71,7 +71,7 @@
             <ul class="sl-menu-sub nav flex-column">
                 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link">Category</a></li>
                 <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Category</a></li>
-                <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brand</a></li>
+                <li class="nav-item"><a href="{{ route('brand.index') }}" class="nav-link">Brand</a></li>
             </ul>
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
@@ -448,22 +448,21 @@
     {{-- sweetalert --}}
     <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
-    <script>  
-        $(document).on('submit', '[id^=form]', function (e) {
-            event.preventDefault(); // prevent form submit
-            var form = document.forms["form"]; // storing the form
-            swal({
-                    title: "Are you Want to delete?",
-                    text: "Once Delete, This will be Permanently Delete!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
+    <script>    
+        $(document).on("click", "#delete", function(e){
+            e.preventDefault();
+                swal({
+                title: "Are you Want to delete?",
+                text: "Once Delete, This will be Permanently Delete!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
                 })
                 .then((willDelete) => {
-                    if (willDelete) {
-                        form.submit();
-                    } else {
-                        return true;
+                if (willDelete) {
+                    $(this).closest('form').submit();
+                } else {
+                    return true;
                 }
             });
         });

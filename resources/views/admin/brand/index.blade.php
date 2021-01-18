@@ -4,13 +4,13 @@
     <div class="sl-mainpanel">
         <div class="sl-pagebody">
             <div class="sl-page-title">
-                <h5>Category Table</h5>
+                <h5>Brand Table</h5>
             </div><!-- sl-page-title -->
 
             <div class="card pd-20 pd-sm-40">
-                <h6 class="card-body-title">Category List
+                <h6 class="card-body-title">Brand List
                     <a href="#" class="btn btn-sm btn-warning" style="float: right;" data-toggle="modal"
-                        data-target="#addNewCategory">Add New</a>
+                        data-target="#addNewBrand">Add New</a>
                 </h6>
 
                 <div class="table-wrapper">
@@ -18,26 +18,27 @@
                         <thead>
                             <tr>
                                 <th class="wd-15p">ID</th>
-                                <th class="wd-15p">Category name</th>
+                                <th class="wd-15p">Brand name</th>
+                                <th class="wd-15p">Brand Logo</th>
                                 <th class="wd-20p">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($brands as $brand)
                                 <tr>
-                                    <input type="hidden" class="value_id" value="{{ $category->id }}">
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->category_name }}</td>
+                                    <td>{{ $brand->id }}</td>
+                                    <td>{{ $brand->brand_name }}</td>
+                                    <td><img width="70" src="{{ asset($brand->brand_logo) }}"
+                                            alt="{{ $brand->brand_name }}"> </td>
                                     <td>
                                         <div class="row">
                                             <div>
-                                                <a href="{{ route('category.edit', [$category->id]) }}"
+                                                <a href="{{ route('brand.edit', [$brand->id]) }}"
                                                     class="btn btn-sm btn-info">
                                                     Edit </a>
                                             </div>
-                                            <div style="margin-left: 10px;">
-                                                <form method="POST"
-                                                    action="{{ route('category.destroy', [$category->id]) }}">
+                                            <div style="margin-left: 10px">
+                                                <form method="POST" action="{{ route('brand.destroy', [$brand->id]) }}">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     
@@ -45,6 +46,7 @@
                                                         class="btn btn-sm btn-danger" id="delete">Delete</a>
                                                 </form>
                                             </div>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -57,7 +59,7 @@
     </div>
 
 
-    <div id="addNewCategory" class="modal fade">
+    <div id="addNewBrand" class="modal fade">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content tx-size-sm">
                 <div class="modal-header pd-x-20">
@@ -67,22 +69,28 @@
                     </button>
                 </div>
 
-                <form method="post" action="{{ route('category.store') }}">
+                <form method="post" action="{{ route('brand.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="modal-body pd-20">
 
                         <div class="mb-3">
-                            <label for="inputCategory" class="form-label">Category Name</label>
-                            <input type="text" class="form-control {{ $errors->has('category_name') ? 'error' : '' }}"
-                                id="inputCategory" placeholder="Category" name="category_name">
+                            <label for="inputBrand" class="form-label">Brand Name</label>
+                            <input type="text" class="form-control {{ $errors->has('brand_name') ? 'error' : '' }}"
+                                id="inputBrand" placeholder="Brand" name="brand_name">
 
                             <!-- Error -->
-                            @if ($errors->has('category_name'))
+                            @if ($errors->has('brand_name'))
                                 <div class="error" style="color: red;">
-                                    {{ $errors->first('category_name') }}
+                                    {{ $errors->first('brand_name') }}
                                 </div>
                             @endif
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputBrandLogo" class="form-label">Brand Logo</label>
+                            <input type="file" class="form-control" id="inputBrandLogo" placeholder="Brand Logo"
+                                name="brand_logo">
                         </div>
 
                     </div><!-- modal-body -->

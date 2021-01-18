@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Category\BrandController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,8 @@ Route::middleware(['auth', 'authAdmin'])->group(function () {
     })->name('admin.dashboard');
 
     Route::resource('admin/category', CategoryController::class);
+
+    Route::resource('admin/brand', BrandController::class);
 });
 
 require __DIR__.'/auth.php';

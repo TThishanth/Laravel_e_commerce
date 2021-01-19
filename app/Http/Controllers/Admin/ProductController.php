@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Category;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Brand;
 use App\Models\Admin\Category;
+use App\Models\Admin\Subcategory;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        
-        return view('admin.category.index', compact('categories'));
+        return view('admin.product.index');
     }
 
     /**
@@ -27,7 +27,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        $brands = Brand::all();
+
+        return view('admin.product.create', compact('categories', 'brands'));
     }
 
     /**
@@ -38,20 +42,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
-        ]);
-
-        $input = $request->all();
-
-        Category::create($input);
-
-        $notification = array(
-            'message' => 'Category created Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+        //
     }
 
     /**
@@ -62,7 +53,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $cat = Subcategory::where('category_id', $id)->get();
+
+        return json_encode($cat);
     }
 
     /**
@@ -73,9 +66,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-
-        return view('admin.category.edit', compact('category'));
+        //
     }
 
     /**
@@ -87,20 +78,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'category_name' => 'required',
-        ]);
-
-        $category = Category::findOrFail($id);
-
-        $category->update($request->all());
-
-        $notification = array(
-            'message' => 'Category Updated Successfully',
-            'alert-type' => 'success',
-        );
-
-        return redirect('/admin/category')->with($notification);
+        //
     }
 
     /**
@@ -111,16 +89,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-
-        $category = Category::findOrFail($id);
-
-        $category->delete();
-
-        $notification = array(
-            'message' => 'Category Deleted Successfully',
-            'alert-type' => 'success',
-        );
-
-        return redirect()->back()->with($notification);
+        //
     }
 }

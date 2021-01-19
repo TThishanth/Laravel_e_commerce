@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Category;
+use App\Models\Admin\Coupon;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        
-        return view('admin.category.index', compact('categories'));
+        $coupons = Coupon::all();
+
+        return view('admin.coupon.index', compact('coupons'));
     }
 
     /**
@@ -39,15 +39,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+            'coupon' => 'required',
+            'discount' => 'required',
         ]);
 
         $input = $request->all();
 
-        Category::create($input);
+        Coupon::create($input);
 
         $notification = array(
-            'message' => 'Category created Successfully',
+            'message' => 'Coupon created Successfully',
             'alert-type' => 'success'
         );
 
@@ -73,9 +74,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $coupon = Coupon::findOrFail($id);
 
-        return view('admin.category.edit', compact('category'));
+        return view('admin.coupon.edit', compact('coupon'));
     }
 
     /**
@@ -88,19 +89,20 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'category_name' => 'required',
+            'coupon' => 'required',
+            'discount' => 'required',
         ]);
+        
+        $coupon = Coupon::findOrFail($id);
 
-        $category = Category::findOrFail($id);
-
-        $category->update($request->all());
+        $coupon->update($request->all());
 
         $notification = array(
-            'message' => 'Category Updated Successfully',
+            'message' => 'Coupon Updated Successfully',
             'alert-type' => 'success',
         );
 
-        return redirect('/admin/category')->with($notification);
+        return redirect('/admin/coupon')->with($notification);
     }
 
     /**
@@ -111,13 +113,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $coupon = Coupon::findOrFail($id);
 
-        $category = Category::findOrFail($id);
-
-        $category->delete();
+        $coupon->delete();
 
         $notification = array(
-            'message' => 'Category Deleted Successfully',
+            'message' => 'Coupon Deleted Successfully',
             'alert-type' => 'success',
         );
 

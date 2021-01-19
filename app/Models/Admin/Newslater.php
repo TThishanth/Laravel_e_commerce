@@ -5,12 +5,11 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subcategory extends Model
+class Newslater extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'subcategory_name',
-        'category_id',
+        'email',
     ];
 }

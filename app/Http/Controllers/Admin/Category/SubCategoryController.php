@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Category;
+use App\Models\Admin\Subcategory;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        
-        return view('admin.category.index', compact('categories'));
+        $subcategories = Subcategory::join('categories', 'subcategories.category_id', 'categories.id')->select('subcategories.*', 'categories.category_name')->get();
+
+        return view('admin.subcategory.index', compact('categories', 'subcategories'));
     }
 
     /**
@@ -39,15 +41,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+            'subcategory_name' => 'required|unique:subcategories|max:55',
+            'category_id' => 'required',
         ]);
 
         $input = $request->all();
 
-        Category::create($input);
+        Subcategory::create($input);
 
         $notification = array(
-            'message' => 'Category created Successfully',
+            'message' => 'Sub Category created Successfully',
             'alert-type' => 'success'
         );
 
@@ -73,11 +76,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $subcategory = Subcategory::findOrFail($id);
 
-        return view('admin.category.edit', compact('category'));
+        $categories = Category::all();
+
+        return view('admin.subcategory.edit', compact('subcategory', 'categories'));
     }
-
+ 
     /**
      * Update the specified resource in storage.
      *
@@ -88,19 +93,20 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'category_name' => 'required',
+            'subcategory_name' => 'required',
+            'category_id' => 'required',
         ]);
 
-        $category = Category::findOrFail($id);
+        $subcategory = Subcategory::findOrFail($id);
 
-        $category->update($request->all());
+        $subcategory->update($request->all());
 
         $notification = array(
-            'message' => 'Category Updated Successfully',
+            'message' => 'Sub Category Updated Successfully',
             'alert-type' => 'success',
         );
 
-        return redirect('/admin/category')->with($notification);
+        return redirect('/admin/subcategory')->with($notification);
     }
 
     /**
@@ -111,13 +117,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $subcategory = Subcategory::findOrFail($id);
 
-        $category = Category::findOrFail($id);
-
-        $category->delete();
+        $subcategory->delete();
 
         $notification = array(
-            'message' => 'Category Deleted Successfully',
+            'message' => 'Sub Category Deleted Successfully',
             'alert-type' => 'success',
         );
 

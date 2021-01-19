@@ -71,8 +71,15 @@
                                     @if (Route::has('login'))
                                         <div class="hidden fixed top-0 right-0 px-6 sm:block">
                                             @auth
-                                                <a href="{{ url('/pages/dashboard') }}"
-                                                    class="text-sm text-gray-700 underline">Dashboard</a>
+                                                <!-- Authentication -->
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+
+                                                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                                                    this.closest('form').submit();">
+                                                        <i class="icon ion-power"></i> {{ __('Logout') }}
+                                                    </x-dropdown-link>
+                                                </form>
                                             @else
                                                 <a href="{{ route('login') }}"
                                                     class="text-sm text-gray-700 underline">Login</a>
@@ -442,10 +449,11 @@
                                 </div>
                             </div>
                             <div class="newsletter_content clearfix">
-                                <form action="#" class="newsletter_form">
+                                <form method="post" class="newsletter_form" action="{{ route('newslater.store') }}">
+                                    @csrf
                                     <input type="email" class="newsletter_input" required="required"
-                                        placeholder="Enter your email address">
-                                    <button class="newsletter_button">Subscribe</button>
+                                        placeholder="Enter your email address" name="email">
+                                    <button type="submit" class="newsletter_button">Subscribe</button>
                                 </form>
                                 <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
                             </div>
@@ -582,27 +590,27 @@
     {{-- toastr --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
  
-     <script>
-         @if (Session::has('message'))
-            var type = '{{ Session::get('alert-type', 'info') }}'
-            switch (type) {
+    <script>
+        @if(Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch(type){
                 case 'info':
-                    toastr.info("{{ Session::get('messege') }}");
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
                     break;
 
                 case 'success':
-                    toastr.success("{{ Session::get('messege') }}");
-                    break;
-
-                case 'warning':
-                    toastr.warning("{{ Session::get('messege') }}");
+                    toastr.success("{{ Session::get('message') }}");
                     break;
 
                 case 'error':
-                    toastr.error("{{ Session::get('messege') }}");
-                    break;           
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
             }
-         @endif
+        @endif
      </script>
 </body>
 

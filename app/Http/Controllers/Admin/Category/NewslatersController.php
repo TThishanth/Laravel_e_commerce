@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Category;
+use App\Models\Admin\Newslater;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class NewslatersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        
-        return view('admin.category.index', compact('categories'));
+        $newslaters = Newslater::all();
+
+        return view('admin.newslater.index', compact('newslaters'));
     }
 
     /**
@@ -39,15 +39,15 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+            'email' => 'required|unique:newslaters',
         ]);
 
         $input = $request->all();
 
-        Category::create($input);
+        Newslater::create($input);
 
         $notification = array(
-            'message' => 'Category created Successfully',
+            'message' => 'Subscribed Successfully',
             'alert-type' => 'success'
         );
 
@@ -73,9 +73,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-
-        return view('admin.category.edit', compact('category'));
+        //
     }
 
     /**
@@ -87,20 +85,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'category_name' => 'required',
-        ]);
-
-        $category = Category::findOrFail($id);
-
-        $category->update($request->all());
-
-        $notification = array(
-            'message' => 'Category Updated Successfully',
-            'alert-type' => 'success',
-        );
-
-        return redirect('/admin/category')->with($notification);
+        //
     }
 
     /**
@@ -111,13 +96,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $newslater = Newslater::findOrFail($id);
 
-        $category = Category::findOrFail($id);
-
-        $category->delete();
+        $newslater->delete();
 
         $notification = array(
-            'message' => 'Category Deleted Successfully',
+            'message' => 'Newslater Deleted Successfully',
             'alert-type' => 'success',
         );
 

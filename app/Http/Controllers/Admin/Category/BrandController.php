@@ -63,7 +63,7 @@ class BrandController extends Controller
 
             $notification = array(
                 'message' => 'Brand Created Successfully',
-                'alert-type' => 'success'
+                'alert-type' => 'success',
             );
 
             return redirect()->back()->with($notification);

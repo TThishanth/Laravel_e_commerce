@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Product Details: <span
                                             class="tx-danger">*</span></label>
-                                    <input class="form-control" id="summernote" name="product_details">
+                                    <textarea class="form-control" id="summernote" name="product_details"></textarea>
                                 </div>
                             </div><!-- col-12 -->
 
@@ -117,10 +117,10 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Image One (Main Thumbnail): <span
-                                            class="tx-danger">*</span></label>
+                                            class="tx-danger">*</span></label><br>
                                     <label class="custom-file">
                                         <input type="file" id="file" class="custom-file-input" name="image_one"
-                                            onchange="readURL1(this);">
+                                            onchange="readURL1(this);" required>
                                         <span class="custom-file-control"></span>
                                     </label>
                                 </div>
@@ -133,8 +133,8 @@
                                             class="tx-danger">*</span></label><br>
                                     <label class="custom-file">
                                         <input type="file" id="file" class="custom-file-input" name="image_two"
-                                            onchange="readURL2(this);">
-                                        <span class="custom-file-control"></span>  
+                                            onchange="readURL2(this);" required>
+                                        <span class="custom-file-control"></span>
                                     </label>
                                 </div>
                                 <img src="#" id="two" alt="">
@@ -146,8 +146,8 @@
                                             class="tx-danger">*</span></label><br>
                                     <label class="custom-file">
                                         <input type="file" id="file" class="custom-file-input" name="image_three"
-                                            onchange="readURL3(this);">
-                                        <span class="custom-file-control"></span>       
+                                            onchange="readURL3(this);" required>
+                                        <span class="custom-file-control"></span>
                                     </label>
                                 </div>
                                 <img src="#" id="three" alt="">

@@ -45,6 +45,10 @@ Route::middleware(['auth', 'authAdmin'])->group(function () {
     Route::resource('admin/newslater', NewslatersController::class);
 
     Route::resource('admin/product', ProductController::class);
+
+    Route::get('admin/product/active/{id}', [ProductController::class, 'active'])->name('product.active');
+
+    Route::get('admin/product/inactive/{id}', [ProductController::class, 'inactive'])->name('product.inactive');
 });
 
 require __DIR__.'/auth.php';

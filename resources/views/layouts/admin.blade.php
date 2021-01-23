@@ -90,6 +90,20 @@
                 <li class="nav-item"><a href="{{ route('product.create') }}" class="nav-link">Add Products</a></li>
                 <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link">All Products</a></li>
             </ul>
+
+            <a href="#" class="sl-menu-link">
+                <div class="sl-menu-item">
+                    <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-20"></i>
+                    <span class="menu-item-label">Blog</span>
+                    <i class="menu-item-arrow fa fa-angle-down"></i>
+                </div><!-- menu-item -->
+            </a><!-- sl-menu-link -->
+            <ul class="sl-menu-sub nav flex-column">
+                <li class="nav-item"><a href="{{ route('post_category.index') }}" class="nav-link">Blog Category</a></li>
+                <li class="nav-item"><a href="{{ route('post_category.create') }}" class="nav-link">Add Post</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Post List</a></li>
+            </ul>
+
             <a href="#" class="sl-menu-link">
                 <div class="sl-menu-item">
                     <i class="menu-item-icon icon ion-ios-gear-outline tx-24"></i>
@@ -455,6 +469,21 @@
           tooltip: false
         })
       });
+    </script>
+
+    <script>
+        $(function(){
+        'use strict';
+
+        // Inline editor
+        var editor = new MediumEditor('.editable');
+
+        // Summernote editor
+        $('#summernote1').summernote({
+            height: 150,
+            tooltip: false
+        })
+        });
     </script>
 
     <script src="{{ asset('admin/js/starlight.js') }}"></script>

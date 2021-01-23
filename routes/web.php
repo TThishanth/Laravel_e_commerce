@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Category\CouponController;
 use App\Http\Controllers\Admin\Category\NewslatersController;
 use App\Http\Controllers\Admin\Category\SubCategoryController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,12 @@ Route::middleware(['auth', 'authAdmin'])->group(function () {
     Route::get('admin/product/active/{id}', [ProductController::class, 'active'])->name('product.active');
 
     Route::get('admin/product/inactive/{id}', [ProductController::class, 'inactive'])->name('product.inactive');
+
+    Route::get('admin/product/view/{id}', [ProductController::class, 'showproduct'])->name('product.showproduct');
+
+    Route::resource('admin/post_category', PostController::class);
+
+    Route::post('admin/post_category/store', [PostController::class, 'poststore'])->name('post_category.poststore');
 });
 
 require __DIR__.'/auth.php';

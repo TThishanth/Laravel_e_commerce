@@ -58,7 +58,7 @@
                                                 </form>
                                             </div>
                                             <div class="col-3">
-                                                <a href="{{ route('product.edit', [$product->id]) }}"
+                                                <a href="{{ route('product.showproduct', [$product->id]) }}"
                                                     class="btn btn-sm btn-warning" title="View">
                                                     <i class="fa fa-eye"></i> </a>
                                             </div>
